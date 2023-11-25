@@ -8,7 +8,6 @@ public class EnregistrementDeHeuresDeTravailApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EnregistrementDeHeuresDeTravailApplication.class, args);
-
 	}
 
 }
