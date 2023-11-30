@@ -4,19 +4,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Table(name = "heures_de_travail")
+@Table(name = "bon_de_livraison")
 @Getter
 @Setter
-public class WorkHourEntity {
+public class DeliveryNoteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "heures_id")
-    private Long id;
+    @Column(name = "bon_de_livraison_id")
+    private Long deliveryNoteId;
 
     private String date;
-
     @Column(name = "heure_de_debut")
     private String startTime;
 
@@ -27,15 +28,9 @@ public class WorkHourEntity {
     private String projectName;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private UserEntity userEntity;
+    @JoinColumn(name = "client_id", insertable = false,updatable = false)
+    private CustomerEntity customerEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "bon_de_livraison_id", insertable = false, updatable = false)
-    private WorkHourEntity workHourEntity;
-
-
-
-
-
+    @OneToMany
+    private List<WorkHourEntity> workHourEntityList;
 }
