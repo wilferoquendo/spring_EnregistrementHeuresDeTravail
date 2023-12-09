@@ -31,6 +31,6 @@ public class DeliveryNoteEntity {
     @JoinColumn(name = "client_id", insertable = false,updatable = false)
     private CustomerEntity customerEntity;
 
-    @OneToMany
+    @OneToMany(targetEntity = WorkHourEntity.class, mappedBy = "deliveryNoteEntity")
     private List<WorkHourEntity> workHourEntityList;
 }

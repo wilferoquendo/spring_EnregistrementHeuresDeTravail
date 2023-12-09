@@ -32,7 +32,7 @@ public class WorkHourEntity {
 
     @ManyToOne
     @JoinColumn(name = "bon_de_livraison_id", insertable = false, updatable = false)
-    private WorkHourEntity workHourEntity;
+    private DeliveryNoteEntity cd I;
 
 
 

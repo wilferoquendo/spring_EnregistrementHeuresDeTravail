@@ -20,7 +20,7 @@ public class UserEntity {
     @Column(name = "user_name", unique = true)
     private String name;
 
-    @OneToMany
+    @OneToMany(targetEntity = WorkHourEntity.class, mappedBy = "userEntity")
     private List<WorkHourEntity> workHours;
 
 }

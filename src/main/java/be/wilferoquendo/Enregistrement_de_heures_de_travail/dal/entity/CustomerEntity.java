@@ -29,7 +29,7 @@ public class CustomerEntity {
     @Column(name = "adresse")
     private String address;
 
-    @OneToMany
+    @OneToMany(targetEntity = DeliveryNoteEntity.class, mappedBy = "customerEntity")
     private List<DeliveryNoteEntity> deliveryNoteEntityList;
 
 }
