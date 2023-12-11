@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "heures_de_travail")
 @Getter
@@ -18,10 +20,10 @@ public class WorkHourEntity {
     private String date;
 
     @Column(name = "heure_de_debut")
-    private String startTime;
+    private LocalTime startTime;
 
     @Column(name = "heure_du_final")
-    private String endTime;
+    private LocalTime endTime;
 
     @Column(name = "nom_de_projet")
     private String projectName;
@@ -32,7 +34,7 @@ public class WorkHourEntity {
 
     @ManyToOne
     @JoinColumn(name = "bon_de_livraison_id", insertable = false, updatable = false)
-    private DeliveryNoteEntity cd I;
+    private DeliveryNoteEntity deliveryNoteEntity;
 
 
 

@@ -6,8 +6,6 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.Work
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -29,7 +27,7 @@ public class WorkHourServiceImpl implements WorkHourService {
     }
 
     @Override
-    public void SaveWorkHour(WorkHourForm workHourForm) {
+    public void saveWorkHour(WorkHourForm workHourForm) {
         WorkHourEntity workHourEntity = new WorkHourEntity();
         workHourEntity.setDate(workHourForm.getDate());
         workHourEntity.setStartTime(workHourForm.getStartTime());

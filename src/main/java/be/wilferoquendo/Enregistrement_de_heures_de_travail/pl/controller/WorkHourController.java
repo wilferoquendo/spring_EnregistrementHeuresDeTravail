@@ -1,10 +1,9 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.controller;
 
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
-import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +12,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/workhours")
+@Slf4j
 public class WorkHourController {
     private final WorkHourService workHourService;
 
@@ -28,7 +28,8 @@ public class WorkHourController {
     }
     @PostMapping("/saveworkhour")
     public ResponseEntity<String> saveWorkHour(@RequestBody  WorkHourForm workHourForm) {
-        workHourService.SaveWorkHour(workHourForm);
+        log.info("workHour: {}", workHourForm);
+        workHourService.saveWorkHour(workHourForm);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(workHourForm.getProjectName());
