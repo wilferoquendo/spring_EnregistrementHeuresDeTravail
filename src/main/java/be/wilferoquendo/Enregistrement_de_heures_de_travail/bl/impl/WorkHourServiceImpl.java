@@ -6,6 +6,12 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.Work
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -33,6 +39,19 @@ public class WorkHourServiceImpl implements WorkHourService {
         workHourEntity.setStartTime(workHourForm.getStartTime());
         workHourEntity.setEndTime(workHourForm.getEndTime());
         workHourEntity.setProjectName(workHourForm.getProjectName());
+
+        // Calcular la diferencia de horas
+        LocalTime startTime = workHourForm.getStartTime();
+        LocalTime endTime = workHourForm.getEndTime();
+
+        Duration duration = Duration.between(startTime, endTime);
+        long minutes = duration.toMinutes();
+        double hours = (double) minutes / 60;
+
+        BigDecimal calculatedHours = BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
+        workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+
         this.workHourJpaRepository.save(workHourEntity);
     }
+
 }

@@ -10,4 +10,5 @@ public interface WorkHourService {
     List<WorkHourDTO> findAllWorkHours();
 
     void saveWorkHour(WorkHourForm workHourForm);
+
 }
