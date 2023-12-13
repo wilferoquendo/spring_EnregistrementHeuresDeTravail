@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -39,17 +41,40 @@ public class WorkHourServiceImpl implements WorkHourService {
         workHourEntity.setEndTime(workHourForm.getEndTime());
         workHourEntity.setProjectName(workHourForm.getProjectName());
 
+        LocalDate date = workHourForm.getDate();
         LocalTime startTime = workHourForm.getStartTime();
         LocalTime endTime = workHourForm.getEndTime();
 
-        Duration duration = Duration.between(startTime, endTime);
-        long minutes = duration.toMinutes();
-        double hours = (double) minutes / 60;
+        if (endTime.isBefore(startTime)) {
+            LocalDate newDate = date.plusDays(1);
 
-        BigDecimal calculatedHours = BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
-        workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+            LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
+            LocalDateTime endDateTime = LocalDateTime.of(newDate, endTime);
 
-        this.workHourJpaRepository.save(workHourEntity);
+            if (endTime.isBefore(startTime)) {
+                endDateTime = LocalDateTime.of(date.plusDays(1), endTime);
+            } else {
+                endDateTime = LocalDateTime.of(date, endTime);
+            }
+
+            Duration duration = Duration.between(startDateTime, endDateTime);
+            long minutes = duration.toMinutes();
+            double hours = (double) minutes / 60;
+
+            BigDecimal calculatedHours = BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
+            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+
+            this.workHourJpaRepository.save(workHourEntity);
+        } else {
+            Duration duration = Duration.between(startTime, endTime);
+            long minutes = duration.toMinutes();
+            double hours = (double) minutes / 60;
+
+            BigDecimal calculatedHours = BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
+            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+
+            this.workHourJpaRepository.save(workHourEntity);
+        }
     }
-
 }
+
