@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalTime;
 public class WorkHourDTO {
 
     private Long id;
-    private String date;
+    private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private String projectName;

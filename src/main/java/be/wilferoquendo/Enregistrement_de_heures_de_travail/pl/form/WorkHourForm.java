@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
 @Setter
 public class WorkHourForm {
-    private String date;
+    private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private BigDecimal calculationOfWorkingHours;

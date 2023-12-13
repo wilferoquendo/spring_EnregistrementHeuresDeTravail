@@ -7,9 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WorkHourJpaRepository extends JpaRepository<WorkHourEntity, Long> {
-
-    @Query(value = "SELECT EXTRACT(HOUR FROM (w.end_time - w.start_time)) " +
-            "FROM WorkHourEntity w " +
-            "WHERE w.id = :id", nativeQuery = true)
-    Integer calculateHoursDifference(Long id);
 }

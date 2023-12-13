@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -40,7 +39,6 @@ public class WorkHourServiceImpl implements WorkHourService {
         workHourEntity.setEndTime(workHourForm.getEndTime());
         workHourEntity.setProjectName(workHourForm.getProjectName());
 
-        // Calcular la diferencia de horas
         LocalTime startTime = workHourForm.getStartTime();
         LocalTime endTime = workHourForm.getEndTime();
 

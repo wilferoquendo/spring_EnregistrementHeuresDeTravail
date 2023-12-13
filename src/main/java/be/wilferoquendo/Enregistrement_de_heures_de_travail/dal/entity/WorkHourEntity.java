@@ -1,11 +1,14 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -19,7 +22,7 @@ public class WorkHourEntity {
     @Column(name = "heures_id")
     private Long id;
 
-    private String date;
+    private LocalDate date;
 
     @Column(name = "heure_de_debut", columnDefinition = "TIME")
     private LocalTime startTime;
@@ -33,6 +36,9 @@ public class WorkHourEntity {
     @Column(name = "nom_de_projet")
     private String projectName;
 
+    @Column(name = "date_de_creation")
+    private LocalDateTime creationDate;
+
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private UserEntity userEntity;
@@ -42,7 +48,9 @@ public class WorkHourEntity {
     private DeliveryNoteEntity deliveryNoteEntity;
 
 
-
-
+    @PrePersist
+    public void prePersist() {
+        creationDate = LocalDateTime.now();
+    }
 
 }
