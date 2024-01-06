@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -18,6 +19,7 @@ public class WorkHourDTO {
     private LocalTime startTime;
     private LocalTime endTime;
     private String projectName;
+    private BigDecimal calculationOfWorkingHours;
 
 
     public static WorkHourDTO fromEntity(WorkHourEntity workHourEntity){
@@ -27,6 +29,7 @@ public class WorkHourDTO {
         workHourDTO.setStartTime(workHourEntity.getStartTime());
         workHourDTO.setEndTime(workHourEntity.getEndTime());
         workHourDTO.setProjectName(workHourEntity.getProjectName());
+        workHourDTO.setCalculationOfWorkingHours(workHourEntity.getCalculationOfWorkingHours());
         return workHourDTO;
     }
 }
