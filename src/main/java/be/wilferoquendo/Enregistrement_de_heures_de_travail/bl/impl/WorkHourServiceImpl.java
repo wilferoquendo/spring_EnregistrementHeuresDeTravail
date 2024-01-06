@@ -35,46 +35,30 @@ public class WorkHourServiceImpl implements WorkHourService {
 
     @Override
     public void saveWorkHour(WorkHourForm workHourForm) {
-        WorkHourEntity workHourEntity = new WorkHourEntity();
-        workHourEntity.setDate(workHourForm.getDate());
-        workHourEntity.setStartTime(workHourForm.getStartTime());
-        workHourEntity.setEndTime(workHourForm.getEndTime());
-        workHourEntity.setProjectName(workHourForm.getProjectName());
+        WorkHourEntity workHourEntity = workHourForm.toEntity();
 
-        LocalDate date = workHourForm.getDate();
-        LocalTime startTime = workHourForm.getStartTime();
-        LocalTime endTime = workHourForm.getEndTime();
+        BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
+        workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+
+        this.workHourJpaRepository.save(workHourEntity);
+    }
+
+    private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {
+
+        LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
+        LocalDateTime endDateTime;
 
         if (endTime.isBefore(startTime)) {
-            LocalDate newDate = date.plusDays(1);
-
-            LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
-            LocalDateTime endDateTime = LocalDateTime.of(newDate, endTime);
-
-            if (endTime.isBefore(startTime)) {
-                endDateTime = LocalDateTime.of(date.plusDays(1), endTime);
-            } else {
-                endDateTime = LocalDateTime.of(date, endTime);
-            }
-
-            Duration duration = Duration.between(startDateTime, endDateTime);
-            long minutes = duration.toMinutes();
-            double hours = (double) minutes / 60;
-
-            BigDecimal calculatedHours = BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
-            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
-
-            this.workHourJpaRepository.save(workHourEntity);
+            endDateTime = LocalDateTime.of(date.plusDays(1), endTime);
         } else {
-            Duration duration = Duration.between(startTime, endTime);
-            long minutes = duration.toMinutes();
-            double hours = (double) minutes / 60;
-
-            BigDecimal calculatedHours = BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
-            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
-
-            this.workHourJpaRepository.save(workHourEntity);
+            endDateTime = LocalDateTime.of(date, endTime);
         }
+
+        Duration duration = Duration.between(startDateTime, endDateTime);
+        long minutes = duration.toMinutes();
+        double hours = (double) minutes / 60;
+
+        return BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
     }
 }
 
