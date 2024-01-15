@@ -1,6 +1,10 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception;
 
-public class UserNotFoundException extends RuntimeE(String message) {
+import org.apache.catalina.User;
+
+public class UserNotFoundException extends RuntimeException {
+
+    public UserNotFoundException(String message){
         super(message);
     }
 }
