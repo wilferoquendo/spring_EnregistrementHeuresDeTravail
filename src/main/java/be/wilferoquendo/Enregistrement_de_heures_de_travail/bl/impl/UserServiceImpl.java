@@ -20,6 +20,12 @@ public class UserServiceImpl implements UserService {
         this.userJpaRepository = userJpaRepository;
     }
 
+
+    @Override
+    public UserEntity findById(Long id) {
+        return userJpaRepository.findById(id).orElse(null);
+    }
+
     @Override
     public List<UserDTO> findAllUsers() {
         List<UserEntity> userEntities = userJpaRepository.findAll();

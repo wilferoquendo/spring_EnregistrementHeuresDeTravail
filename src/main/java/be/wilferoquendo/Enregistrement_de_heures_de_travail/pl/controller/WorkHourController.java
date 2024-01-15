@@ -1,6 +1,9 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.controller;
 
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.UserNotFoundException;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +19,11 @@ import java.util.Collection;
 public class WorkHourController {
     private final WorkHourService workHourService;
 
-    public WorkHourController(WorkHourService workHourService) {
+    private final UserService userService;
+
+    public WorkHourController(WorkHourService workHourService, UserService userService) {
         this.workHourService = workHourService;
+        this.userService = userService;
     }
     @GetMapping("/listworkHours")
     public ResponseEntity<Collection<WorkHourDTO>> getAll() {
@@ -28,10 +34,16 @@ public class WorkHourController {
     }
     @PostMapping("/saveworkhour")
     public ResponseEntity<String> saveWorkHour(@RequestBody  WorkHourForm workHourForm) {
-        log.info("workHour: {}", workHourForm);
-        workHourService.saveWorkHour(workHourForm);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(workHourForm.getProjectName());
+
+        try{
+            workHourService.saveWorkHour(workHourForm);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(workHourForm.getUserId().toString());
+        } catch (UserNotFoundException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("User not found");
+        }
     }
 }

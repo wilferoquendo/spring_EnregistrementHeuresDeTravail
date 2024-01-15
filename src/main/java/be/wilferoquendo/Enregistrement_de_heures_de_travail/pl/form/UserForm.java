@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class UserForm {
 
-    private Long id;
     private String name;
 
     public UserEntity toEntity() {

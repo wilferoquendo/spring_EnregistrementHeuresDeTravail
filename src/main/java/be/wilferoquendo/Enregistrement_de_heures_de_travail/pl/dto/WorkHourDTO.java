@@ -5,6 +5,7 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourE
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class WorkHourDTO {
     private LocalTime endTime;
     private String projectName;
     private BigDecimal calculationOfWorkingHours;
-
+    private Long userId;
 
     public static WorkHourDTO fromEntity(WorkHourEntity workHourEntity){
         WorkHourDTO workHourDTO = new WorkHourDTO();
@@ -30,6 +31,11 @@ public class WorkHourDTO {
         workHourDTO.setEndTime(workHourEntity.getEndTime());
         workHourDTO.setProjectName(workHourEntity.getProjectName());
         workHourDTO.setCalculationOfWorkingHours(workHourEntity.getCalculationOfWorkingHours());
+
+        if (workHourEntity.getUserEntity() != null) {
+            workHourDTO.setUserId(workHourEntity.getUserEntity().getId());
+        }
+
         return workHourDTO;
     }
 }

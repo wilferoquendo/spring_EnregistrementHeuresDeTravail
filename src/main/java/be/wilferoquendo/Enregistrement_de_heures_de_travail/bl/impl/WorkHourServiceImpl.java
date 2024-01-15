@@ -1,6 +1,9 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.impl;
 
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.UserNotFoundException;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.WorkHourJpaRepository;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
@@ -19,9 +22,11 @@ import java.util.List;
 public class WorkHourServiceImpl implements WorkHourService {
 
     private final WorkHourJpaRepository workHourJpaRepository;
+    private final UserService userService;
 
-    public WorkHourServiceImpl(WorkHourJpaRepository workHourJpaRepository) {
+    public WorkHourServiceImpl(WorkHourJpaRepository workHourJpaRepository, UserService userService) {
         this.workHourJpaRepository = workHourJpaRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -35,12 +40,19 @@ public class WorkHourServiceImpl implements WorkHourService {
 
     @Override
     public void saveWorkHour(WorkHourForm workHourForm) {
-        WorkHourEntity workHourEntity = workHourForm.toEntity();
+        UserEntity userEntity = userService.findById(workHourForm.getUserId());
 
-        BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
-        workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+        if (userEntity != null) {
+            WorkHourEntity workHourEntity = workHourForm.toEntity(userEntity);
 
-        this.workHourJpaRepository.save(workHourEntity);
+            BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
+            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+
+            this.workHourJpaRepository.save(workHourEntity);
+        } else {
+            throw new UserNotFoundException("User not found for ID: " + workHourForm.getUserId());
+        }
+
     }
 
     private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {

@@ -12,10 +12,12 @@ import java.util.List;
 @Setter
 public class UserDTO {
 
+    private Long id;
     private String name;
 
     public static UserDTO fromEntity(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(userEntity.getId());
         userDTO.setName(userEntity.getName());
         return userDTO;
     }

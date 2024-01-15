@@ -1,5 +1,7 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form;
 
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,13 +18,17 @@ public class WorkHourForm {
     private LocalTime endTime;
     private BigDecimal calculationOfWorkingHours;
     private String projectName;
+    private Long userId;
 
-    public WorkHourEntity toEntity(){
+    public WorkHourEntity toEntity(UserEntity userEntity){
         WorkHourEntity workHourEntity = new WorkHourEntity();
         workHourEntity.setDate(getDate());
         workHourEntity.setStartTime(getStartTime());
         workHourEntity.setEndTime(getEndTime());
         workHourEntity.setProjectName(getProjectName());
+
+        workHourEntity.setUserEntity(userEntity);
+
         return workHourEntity;
     }
 }
