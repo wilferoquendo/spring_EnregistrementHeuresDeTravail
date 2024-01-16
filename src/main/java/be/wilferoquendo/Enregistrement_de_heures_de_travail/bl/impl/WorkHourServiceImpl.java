@@ -48,10 +48,11 @@ public class WorkHourServiceImpl implements WorkHourService {
             BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
             workHourEntity.setCalculationOfWorkingHours(calculatedHours);
 
-            BigDecimal hourlySalaryCost = calculateAndUpdateTotalCostOfWork(calculatedHours,
+            BigDecimal totalSalaryCost = calculateAndUpdateTotalSalaryCost(calculatedHours,
                     userEntity.getHourlySalaryCost());
 
-            workHourEntity.setHourlySalaryCost(hourlySalaryCost);
+            workHourEntity.setHourlySalaryCost(userEntity.getHourlySalaryCost());
+            workHourEntity.setTotalSalaryCost(totalSalaryCost);
 
             this.workHourJpaRepository.save(workHourEntity);
         } else {
@@ -77,7 +78,7 @@ public class WorkHourServiceImpl implements WorkHourService {
         return BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
     }
 
-    private BigDecimal calculateAndUpdateTotalCostOfWork(BigDecimal calculatedHours,
+    private BigDecimal calculateAndUpdateTotalSalaryCost(BigDecimal calculatedHours,
                                                          BigDecimal hourlySalaryCost) {
         return calculatedHours.multiply(hourlySalaryCost);
     }
