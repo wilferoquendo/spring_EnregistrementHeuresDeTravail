@@ -48,11 +48,15 @@ public class WorkHourServiceImpl implements WorkHourService {
             BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
             workHourEntity.setCalculationOfWorkingHours(calculatedHours);
 
+            BigDecimal hourlySalaryCost = calculateAndUpdateTotalCostOfWork(calculatedHours,
+                    userEntity.getHourlySalaryCost());
+
+            workHourEntity.setHourlySalaryCost(hourlySalaryCost);
+
             this.workHourJpaRepository.save(workHourEntity);
         } else {
             throw new UserNotFoundException("User not found for ID: " + workHourForm.getUserId());
         }
-
     }
 
     private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {
@@ -71,6 +75,11 @@ public class WorkHourServiceImpl implements WorkHourService {
         double hours = (double) minutes / 60;
 
         return BigDecimal.valueOf(hours).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal calculateAndUpdateTotalCostOfWork(BigDecimal calculatedHours,
+                                                         BigDecimal hourlySalaryCost) {
+        return calculatedHours.multiply(hourlySalaryCost);
     }
 }
 

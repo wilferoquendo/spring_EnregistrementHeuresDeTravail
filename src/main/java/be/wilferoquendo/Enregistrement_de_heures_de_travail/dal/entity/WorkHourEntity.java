@@ -33,6 +33,9 @@ public class WorkHourEntity {
     @Column(name = "heures_de_travail")
     private BigDecimal calculationOfWorkingHours;
 
+    @Column(name = "cout_heure")
+    private BigDecimal hourlySalaryCost;
+
     @Column(name = "nom_de_projet")
     private String projectName;
 
