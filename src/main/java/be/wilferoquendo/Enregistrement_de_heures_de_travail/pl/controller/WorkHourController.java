@@ -33,13 +33,13 @@ public class WorkHourController {
                 .body(workHourDTOCollection);
     }
     @PostMapping("/saveworkhour")
-    public ResponseEntity<String> saveWorkHour(@RequestBody  WorkHourForm workHourForm) {
+    public ResponseEntity<Object> saveWorkHour(@RequestBody  WorkHourForm workHourForm) {
 
         try{
             workHourService.saveWorkHour(workHourForm);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(workHourForm.getUserId().toString());
+                    .body(workHourForm);
         } catch (UserNotFoundException e) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)

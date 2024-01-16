@@ -16,7 +16,6 @@ public class WorkHourForm {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private BigDecimal calculationOfWorkingHours;
     private String projectName;
     private Long userId;
 
