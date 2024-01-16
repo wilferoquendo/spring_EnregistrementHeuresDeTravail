@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,9 @@ public class UserEntity {
 
     @Column(name = "user_name", unique = true)
     private String name;
+
+    @Column(name = "cout_heure", nullable = false)
+    private BigDecimal hourlySalaryCost;
 
     @OneToMany(targetEntity = WorkHourEntity.class, mappedBy = "userEntity")
     private List<WorkHourEntity> workHours;

@@ -21,6 +21,7 @@ public class WorkHourDTO {
     private LocalTime endTime;
     private String projectName;
     private BigDecimal calculationOfWorkingHours;
+//    private BigDecimal hourlySalaryCost;
     private Long userId;
 
     public static WorkHourDTO fromEntity(WorkHourEntity workHourEntity){
@@ -31,6 +32,7 @@ public class WorkHourDTO {
         workHourDTO.setEndTime(workHourEntity.getEndTime());
         workHourDTO.setProjectName(workHourEntity.getProjectName());
         workHourDTO.setCalculationOfWorkingHours(workHourEntity.getCalculationOfWorkingHours());
+//        workHourDTO.setHourlySalaryCost(workHourEntity.getHourlySalaryCost());
 
         if (workHourEntity.getUserEntity() != null) {
             workHourDTO.setUserId(workHourEntity.getUserEntity().getId());
