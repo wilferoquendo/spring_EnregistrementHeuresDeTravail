@@ -29,11 +29,18 @@ public class WorkHourController {
         this.userService = userService;
     }
     @GetMapping("/listworkhours")
-    public ResponseEntity<Collection<WorkHourDTO>> getAll() {
-        Collection<WorkHourDTO> workHourDTOCollection = workHourService.findAllWorkHours();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(workHourDTOCollection);
+    public ResponseEntity<Object> getAll() {
+        try {
+            Collection<WorkHourDTO> workHourDTOCollection = workHourService.findAllWorkHours();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(workHourDTOCollection);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Resquest not found " + e.getMessage());
+        }
+
     }
 
     @GetMapping("/dashboard/totalworkhours")
@@ -41,10 +48,7 @@ public class WorkHourController {
                                                   @RequestParam("endDate") LocalDate endDate){
         try {
             List<WorkHourSummary> workHourSummaries =
-//                    workHourService.findByDateBetween(startDateFilter,
-//                            endDateFilter);
                     workHourService.findBetweenDateTotalSalary(startDate, endDate);
-            System.out.println("this is listWorkHourSummary\n" + workHourSummaries);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(workHourSummaries);
@@ -61,7 +65,6 @@ public class WorkHourController {
         try {
             List<WorkHourSummaryWithUserName> workHourSummariesWithUserName =
                     workHourService.findBetweenDateTotalSalaryWithUserName(startDate, endDate);
-            System.out.println("this is listWorkHourSummary\n" + workHourSummariesWithUserName);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(workHourSummariesWithUserName);
@@ -71,41 +74,6 @@ public class WorkHourController {
                     .body("Request not found" + e.getMessage());
         }
     }
-
-//    @GetMapping("/test/findbyid")
-//    public ResponseEntity<Object> findByIdGreaterThan(@RequestParam Long id){
-//        try {
-//            List<WorkHourSummary> workHourSummaries =
-//                    workHourService.findByIdGreaterThan(id);
-//            System.out.println("this is listIdGreaterThan\n" + workHourSummaries);
-//            return ResponseEntity
-//                    .status(HttpStatus.OK)
-//                    .body(workHourSummaries);
-//        } catch (Exception e) {
-//            return ResponseEntity
-//                    .status(HttpStatus.NOT_FOUND)
-//                    .body("Request not found" + e.getMessage());
-//        }
-//    }
-
-//    @GetMapping("/totalsalarycostbyuser")
-//    public ResponseEntity<Object> findByCalculationOfPriceTotalByUserId() {
-//        try {
-//            System.out.println("***************\n This is userId\n"+
-//                    "\n******************");
-//            WorkHourSummary workHourSummaries =
-//                    workHourService.findByTotalSalaryCostByUserId();
-//            System.out.println("***************\this is worked hours total\n"+ workHourSummaries +
-//                    "\n******************");
-//            return ResponseEntity
-//                    .status(HttpStatus.OK)
-//                    .body(workHourSummaries);
-//        } catch (Exception e) {
-//            return ResponseEntity
-//                    .status(HttpStatus.NOT_FOUND)
-//                    .body(e);
-//        }
-//    }
     @PostMapping("/saveworkhour")
     public ResponseEntity<Object> saveWorkHour(@RequestBody  WorkHourForm workHourForm) {
 

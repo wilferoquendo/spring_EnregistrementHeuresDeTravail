@@ -1,13 +1,11 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto;
 
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
-import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter

@@ -20,13 +20,6 @@ public interface WorkHourService {
 
     List<WorkHourSummaryWithUserName> findBetweenDateTotalSalaryWithUserName(@Param("startDate") LocalDate startDate,
                                                                              @Param("endDate") LocalDate endDate);
-
-//    List<WorkHourSummary> findByIdGreaterThan(Long id);
-
-//    List<WorkHourSummary> totalSalaryByDate(LocalDate startDateFilter,
-//                                            LocalDate endDateFilter);
-//
-//    WorkHourSummary findByTotalSalaryCostByUserId();
 }
 
 

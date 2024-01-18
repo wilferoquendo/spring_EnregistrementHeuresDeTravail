@@ -81,35 +81,6 @@ public class WorkHourServiceImpl implements WorkHourService {
             throw new RequestNotFoundException("Request not found from @Service");
         }
     }
-//
-//    @Override
-//    public List<WorkHourSummary> findByIdGreaterThan(Long id) {
-//        try {
-//            return workHourJpaRepository.findByIdGreaterThan(id);
-//        }catch (Exception e) {
-//            throw new RequestNotFoundException("Request not found from @Service");
-//        }
-//    }
-
-//    @Override
-//    public List<WorkHourSummary> totalSalaryByDate(LocalDate startDateFilter, LocalDate endDateFilter) {
-//        try {
-//            return workHourJpaRepository.totalSalaryByDate(startDateFilter,
-//                    endDateFilter);
-//        }catch (Exception e) {
-//            throw new RequestNotFoundException(" From @Service");
-//        }
-//    }
-
-//    @Override
-//    public WorkHourSummary findByTotalSalaryCostByUserId() {
-//        try {
-//            return workHourJpaRepository.findByTotalSalaryCostByUserId();
-//        }catch (Exception e) {
-//            throw new RequestNotFoundException(" From @Service " + e);
-//        }
-//    }
-
     private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {
 
         LocalDateTime startDateTime = LocalDateTime.of(date, startTime);

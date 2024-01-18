@@ -55,15 +55,5 @@ public class WorkHourEntity {
         creationDate = LocalDateTime.now();
     }
 
-    public Long userId() {
-
-        Long anotherId = getUserEntity().getUserId(); // o la forma en que obtienes el ID del usuario
-        if (anotherId == null) {
-            System.out.println("UserID from WorkHourEntity: " + anotherId);
-            return anotherId;
-        } else {
-            return 99999999L;
-        }
-    }
 
 }
