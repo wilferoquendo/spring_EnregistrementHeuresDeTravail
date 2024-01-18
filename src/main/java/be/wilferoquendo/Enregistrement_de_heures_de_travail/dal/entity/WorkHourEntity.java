@@ -1,10 +1,8 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Formula;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,7 +35,7 @@ public class WorkHourEntity {
     private BigDecimal hourlySalaryCost;
 
     @Column(name = "cout_total")
-    private BigDecimal TotalSalaryCost;
+    private BigDecimal totalSalaryCost;
 
     @Column(name = "nom_de_projet")
     private String projectName;
@@ -46,17 +44,26 @@ public class WorkHourEntity {
     private LocalDateTime creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",updatable = false)
+    @JoinColumn(name = "user_id", updatable = false)
     private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "bon_de_livraison_id", insertable = false, updatable = false)
     private DeliveryNoteEntity deliveryNoteEntity;
-
-
     @PrePersist
     public void prePersist() {
         creationDate = LocalDateTime.now();
+    }
+
+    public Long userId() {
+
+        Long anotherId = getUserEntity().getUserId(); // o la forma en que obtienes el ID del usuario
+        if (anotherId == null) {
+            System.out.println("UserID from WorkHourEntity: " + anotherId);
+            return anotherId;
+        } else {
+            return 99999999L;
+        }
     }
 
 }

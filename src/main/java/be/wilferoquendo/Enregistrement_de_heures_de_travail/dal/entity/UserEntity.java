@@ -16,15 +16,15 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @Column(name = "user_name", unique = true)
-    private String name;
+    private String userName;
 
     @Column(name = "cout_heure", nullable = false)
     private BigDecimal hourlySalaryCost;
 
-    @OneToMany(targetEntity = WorkHourEntity.class, mappedBy = "userEntity")
-    private List<WorkHourEntity> workHours;
+    @OneToMany(targetEntity = WorkHourEntity.class,fetch = FetchType.EAGER, mappedBy = "userEntity")
+    private List<WorkHourEntity> userEntity;
 
 }

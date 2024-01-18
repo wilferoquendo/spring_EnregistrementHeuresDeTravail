@@ -15,7 +15,7 @@ public class UserForm {
 
     public UserEntity toEntity() {
         UserEntity userEntity = new UserEntity();
-        userEntity.setName(getName());
+        userEntity.setUserName(getName());
         userEntity.setHourlySalaryCost(getHourlySalaryCost());
         return userEntity;
     }

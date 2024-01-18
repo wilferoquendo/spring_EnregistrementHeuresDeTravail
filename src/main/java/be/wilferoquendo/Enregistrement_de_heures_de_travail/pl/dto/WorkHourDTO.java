@@ -35,7 +35,7 @@ public class WorkHourDTO {
 //        workHourDTO.setHourlySalaryCost(workHourEntity.getHourlySalaryCost());
 
         if (workHourEntity.getUserEntity() != null) {
-            workHourDTO.setUserId(workHourEntity.getUserEntity().getId());
+            workHourDTO.setUserId(workHourEntity.getUserEntity().getUserId());
         }
 
         return workHourDTO;

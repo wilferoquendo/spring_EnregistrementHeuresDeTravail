@@ -19,8 +19,8 @@ public class UserDTO {
 
     public static UserDTO fromEntity(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(userEntity.getId());
-        userDTO.setName(userEntity.getName());
+        userDTO.setId(userEntity.getUserId());
+        userDTO.setName(userEntity.getUserName());
         userDTO.setHourlySalaryCost(userEntity.getHourlySalaryCost());
         return userDTO;
     }

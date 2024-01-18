@@ -1,11 +1,14 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.impl;
 
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.RequestNotFoundException;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.UserNotFoundException;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.WorkHourJpaRepository;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummary;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import org.springframework.stereotype.Service;
@@ -60,6 +63,53 @@ public class WorkHourServiceImpl implements WorkHourService {
         }
     }
 
+    @Override
+    public List<WorkHourSummary> findBetweenDateTotalSalary(LocalDate startDate,
+                                                            LocalDate endDate) {
+        try {
+            return workHourJpaRepository.findBetweenDateTotalSalary(startDate, endDate);
+        }catch (Exception e) {
+            throw new RequestNotFoundException("Request not found from @Service");
+        }
+    }
+
+    @Override
+    public List<WorkHourSummaryWithUserName> findBetweenDateTotalSalaryWithUserName(LocalDate startDate, LocalDate endDate) {
+        try {
+            return workHourJpaRepository.findBetweenDateTotalSalaryWithUserName(startDate, endDate);
+        }catch (Exception e) {
+            throw new RequestNotFoundException("Request not found from @Service");
+        }
+    }
+//
+//    @Override
+//    public List<WorkHourSummary> findByIdGreaterThan(Long id) {
+//        try {
+//            return workHourJpaRepository.findByIdGreaterThan(id);
+//        }catch (Exception e) {
+//            throw new RequestNotFoundException("Request not found from @Service");
+//        }
+//    }
+
+//    @Override
+//    public List<WorkHourSummary> totalSalaryByDate(LocalDate startDateFilter, LocalDate endDateFilter) {
+//        try {
+//            return workHourJpaRepository.totalSalaryByDate(startDateFilter,
+//                    endDateFilter);
+//        }catch (Exception e) {
+//            throw new RequestNotFoundException(" From @Service");
+//        }
+//    }
+
+//    @Override
+//    public WorkHourSummary findByTotalSalaryCostByUserId() {
+//        try {
+//            return workHourJpaRepository.findByTotalSalaryCostByUserId();
+//        }catch (Exception e) {
+//            throw new RequestNotFoundException(" From @Service " + e);
+//        }
+//    }
+
     private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {
 
         LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
@@ -80,7 +130,12 @@ public class WorkHourServiceImpl implements WorkHourService {
 
     private BigDecimal calculateAndUpdateTotalSalaryCost(BigDecimal calculatedHours,
                                                          BigDecimal hourlySalaryCost) {
-        return calculatedHours.multiply(hourlySalaryCost);
+        if (hourlySalaryCost != null) {
+            return calculatedHours.multiply(hourlySalaryCost);
+        } else {
+            return BigDecimal.ZERO;
+        }
+
     }
 }
 
