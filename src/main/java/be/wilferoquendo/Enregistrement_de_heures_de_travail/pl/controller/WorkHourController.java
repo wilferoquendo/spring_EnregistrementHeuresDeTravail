@@ -3,11 +3,14 @@ package be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.controller;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.UserNotFoundException;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummary;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserId;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +71,23 @@ public class WorkHourController {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(workHourSummariesWithUserName);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Request not found" + e.getMessage());
+        }
+    }
+
+    @GetMapping("/dashboard/workhoursuserid")
+    public ResponseEntity<Object> workHoursBetweenDateAndByUserId(@RequestParam("startDate") LocalDate startDate,
+                                                              @RequestParam("endDate") LocalDate endDate,
+                                                                  @RequestParam("userId") Long userId){
+        try {
+            List<WorkHoursBetweenDateAndByUserId> workHoursByUserId =
+                    workHourService.findWorkHoursBetweenDateAndByUserId (startDate, endDate, userId);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(workHoursByUserId);
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)

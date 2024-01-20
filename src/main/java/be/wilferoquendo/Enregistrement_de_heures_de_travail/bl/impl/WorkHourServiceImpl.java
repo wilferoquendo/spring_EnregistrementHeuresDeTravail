@@ -7,6 +7,7 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourS
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserId;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.WorkHourJpaRepository;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummary;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
@@ -81,6 +82,17 @@ public class WorkHourServiceImpl implements WorkHourService {
             throw new RequestNotFoundException("Request not found from @Service");
         }
     }
+
+    @Override
+    public List<WorkHoursBetweenDateAndByUserId> findWorkHoursBetweenDateAndByUserId(LocalDate startDate, LocalDate endDate, Long userEntity) {
+        try {
+            return workHourJpaRepository.findWorkHoursBetweenDateAndByUserId(startDate, endDate,
+                    userEntity);
+        } catch (Exception e) {
+            throw new RequestNotFoundException("Request not found from @Service");
+        }
+    }
+
     private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {
 
         LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
