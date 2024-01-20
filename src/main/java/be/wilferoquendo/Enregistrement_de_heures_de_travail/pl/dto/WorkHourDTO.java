@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @Setter
 public class WorkHourDTO {
 
-    private Long id;
+    private Long hourId;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -26,7 +26,7 @@ public class WorkHourDTO {
 
     public static WorkHourDTO fromEntity(WorkHourEntity workHourEntity){
         WorkHourDTO workHourDTO = new WorkHourDTO();
-        workHourDTO.setId(workHourEntity.getId());
+        workHourDTO.setHourId(workHourEntity.getHourId());
         workHourDTO.setDate(workHourEntity.getDate());
         workHourDTO.setStartTime(workHourEntity.getStartTime());
         workHourDTO.setEndTime(workHourEntity.getEndTime());

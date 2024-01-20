@@ -18,7 +18,7 @@ public class WorkHourEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "heures_id")
-    private Long id;
+    private Long hourId;
 
     private LocalDate date;
 

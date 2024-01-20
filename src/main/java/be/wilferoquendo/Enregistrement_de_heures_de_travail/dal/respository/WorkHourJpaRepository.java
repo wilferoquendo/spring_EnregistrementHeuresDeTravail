@@ -5,13 +5,16 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkH
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserId;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserName;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.UpdateHourWorkHourDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -78,4 +81,14 @@ public interface WorkHourJpaRepository extends JpaRepository<WorkHourEntity, Lon
     List<WorkHoursBetweenDateAndByUserName> findWorkHoursBetweenDateAndByUserName(@Param("startDate") LocalDate startDate,
                                                                                   @Param("endDate") LocalDate endDate,
                                                                                   @Param("userName") String userName);
+    @Query(
+            value = """
+                    UPDATE heures_de_travail
+                    SET heure_de_debut = :#{#newWorkHour.newStartTime}, heure_du_final = :#{#newWorkHour.newEndTime}
+                    WHERE heures_id  = :#{#newWorkHour.hourId}
+                    """,
+            nativeQuery = true
+    )
+    @Modifying
+    void updateHourWorkHour(@Param("newWorkHour")UpdateHourWorkHourDTO newWorkHour);
 }
