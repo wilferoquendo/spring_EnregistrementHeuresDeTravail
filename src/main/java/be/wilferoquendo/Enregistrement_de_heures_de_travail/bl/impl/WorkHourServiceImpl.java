@@ -8,6 +8,7 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntit
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserId;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserName;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.WorkHourJpaRepository;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummary;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
@@ -89,6 +90,16 @@ public class WorkHourServiceImpl implements WorkHourService {
             return workHourJpaRepository.findWorkHoursBetweenDateAndByUserId(startDate, endDate,
                     userEntity);
         } catch (Exception e) {
+            throw new RequestNotFoundException("Request not found from @Service");
+        }
+    }
+
+    @Override
+    public List<WorkHoursBetweenDateAndByUserName> findWorkHoursBetweenDateAndByUserName(LocalDate startDate, LocalDate endDate, String userName) {
+        try {
+            return workHourJpaRepository.findWorkHoursBetweenDateAndByUserName(startDate, endDate
+                    ,userName);
+        }catch (Exception e) {
             throw new RequestNotFoundException("Request not found from @Service");
         }
     }

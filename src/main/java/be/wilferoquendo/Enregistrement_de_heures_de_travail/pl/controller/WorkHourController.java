@@ -7,6 +7,7 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntit
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummary;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserId;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHoursBetweenDateAndByUserName;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import lombok.extern.slf4j.Slf4j;
@@ -85,6 +86,24 @@ public class WorkHourController {
         try {
             List<WorkHoursBetweenDateAndByUserId> workHoursByUserId =
                     workHourService.findWorkHoursBetweenDateAndByUserId (startDate, endDate, userId);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(workHoursByUserId);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Request not found" + e.getMessage());
+        }
+    }
+
+    @GetMapping("/dashboard/workhoursusername")
+    public ResponseEntity<Object> workHoursBetweenDateAndByUserName(@RequestParam("startDate") LocalDate startDate,
+                                                                  @RequestParam("endDate") LocalDate endDate,
+                                                                  @RequestParam("userName") String userName){
+        try {
+            List<WorkHoursBetweenDateAndByUserName> workHoursByUserId =
+                    workHourService.findWorkHoursBetweenDateAndByUserName (startDate, endDate,
+                            userName);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(workHoursByUserId);
