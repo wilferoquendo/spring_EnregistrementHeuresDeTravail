@@ -58,6 +58,7 @@ public class WorkHourServiceImpl implements WorkHourService {
     }
 
     @Override
+    @Transactional
     public void saveWorkHour(WorkHourForm workHourForm) {
         UserEntity userEntity = userService.findById(workHourForm.getUserId());
 
@@ -84,8 +85,6 @@ public class WorkHourServiceImpl implements WorkHourService {
     public void updateHourWorkHour(UpdateHourWorkHourDTO newWorkHour) {
         try {
             WorkHourEntity workHourEntity = this.findById(newWorkHour.getHourId());
-            System.out.println("this is service updatehour\n " + workHourEntity + "\nthis is " +
-                    "service hourId\n " + newWorkHour.getHourId());
             if (workHourEntity != null) {
                 BigDecimal calculatedHours = calculateWorkingHours(newWorkHour.getNewStartTime(),
                         newWorkHour.getNewEndTime(),
@@ -99,6 +98,11 @@ public class WorkHourServiceImpl implements WorkHourService {
         } catch (Exception e) {
             throw new RequestNotFoundException(" @Service " + e);
         }
+    }
+
+    @Override
+    public void deleteHourWorkHour(Long hourId) {
+        workHourJpaRepository.deleteById(hourId);
     }
 
 

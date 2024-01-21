@@ -12,6 +12,7 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.UpdateHourWor
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.jdbc.Work;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -144,6 +145,27 @@ public class WorkHourController {
             return ResponseEntity
                     .badRequest()
                     .build();
+        }
+    }
+
+    @DeleteMapping("/deleteworkhour/{hourId}")
+    public ResponseEntity<Object> deleteHourWorkHour(@PathVariable Long hourId) {
+        try {
+            if (workHourService.existsByHourId(hourId)) {
+                workHourService.deleteHourWorkHour(hourId);
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(hourId);
+            } else {
+                return ResponseEntity
+                        .badRequest()
+                        .build();
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e);
         }
     }
 }

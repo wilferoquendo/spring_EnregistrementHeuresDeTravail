@@ -10,7 +10,6 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.UpdateHourWor
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.WorkHourDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +22,8 @@ public interface WorkHourService {
     void saveWorkHour (WorkHourForm workHourForm);
 
     void updateHourWorkHour (UpdateHourWorkHourDTO newWorkHour);
+
+    void deleteHourWorkHour (Long hourId);
 
     List<WorkHourSummary> findBetweenDateTotalSalary(LocalDate startDate,
                                                      LocalDate endDate);
