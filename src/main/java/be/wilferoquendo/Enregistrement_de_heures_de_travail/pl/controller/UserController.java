@@ -50,8 +50,8 @@ public class UserController {
                         .body(newDataUser);
             } else {
                 return ResponseEntity
-                        .badRequest()
-                        .build();
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("UserId not found");
             }
         } catch (Exception e) {
             return ResponseEntity

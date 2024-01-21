@@ -5,6 +5,7 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.CustomerS
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.CustomerEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.CustomerByPhoneNumber;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.CustomerDTO;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.UpdateCustomerDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.CustomerForm;
 import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,26 @@ public class CustomerController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(customerForm.getCustomerName());
+    }
+
+    @PutMapping("/updatecustomer")
+    public ResponseEntity<Object> updateCustomer(@RequestBody UpdateCustomerDTO newDataCustomer) {
+        try {
+            if (customerService.existsCustomerById(newDataCustomer.getCustomerId())) {
+                customerService.updateCustomer(newDataCustomer);
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(newDataCustomer);
+            }else {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("CustomerId not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e);
+        }
     }
 }
 
