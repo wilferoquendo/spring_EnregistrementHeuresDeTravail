@@ -152,10 +152,11 @@ public class WorkHourController {
     public ResponseEntity<Object> deleteHourWorkHour(@PathVariable Long hourId) {
         try {
             if (workHourService.existsByHourId(hourId)) {
+                WorkHourDTO workHourDTO = WorkHourDTO.fromEntity(workHourService.findById(hourId));
                 workHourService.deleteHourWorkHour(hourId);
                 return ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(hourId);
+                        .body(workHourDTO);
             } else {
                 return ResponseEntity
                         .badRequest()

@@ -25,6 +25,7 @@ public interface WorkHourService {
 
     void deleteHourWorkHour (Long hourId);
 
+
     List<WorkHourSummary> findBetweenDateTotalSalary(LocalDate startDate,
                                                      LocalDate endDate);
 

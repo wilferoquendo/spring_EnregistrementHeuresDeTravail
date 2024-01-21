@@ -2,10 +2,10 @@ package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.impl;
 
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.CustomerService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.CustomerEntity;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.CustomerByPhoneNumber;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.CustomerJpaRespository;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.CustomerDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.CustomerForm;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,4 +34,10 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerEntity customerEntity = customerForm.toEntity();
             customerJpaRespository.save(customerEntity);
     }
+
+    @Override
+    public CustomerByPhoneNumber findCustomerByPhoneNumber(String phoneNumber) {
+        return customerJpaRespository.findCustomerByPhoneNumber(phoneNumber);
+    }
+
 }
