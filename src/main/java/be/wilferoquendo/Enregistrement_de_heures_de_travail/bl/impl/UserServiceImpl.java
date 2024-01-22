@@ -1,6 +1,7 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.impl;
 
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.RequestNotFoundException;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.UserNotFoundException;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.UserJpaRepository;
@@ -32,6 +33,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByUserId(Long userId) {
         return userJpaRepository.existsById(userId);
+    }
+
+    @Override
+    public UserEntity getUserEntityById(Long userId) {
+        return userJpaRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(
+                "User not found with ID: " + userId));
     }
 
     @Override

@@ -12,11 +12,24 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.WorkHourForm
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface WorkHourService {
 
     boolean existsByHourId(Long id);
+
+    boolean existsByUserEntityAndStartTimeAndDate (UserEntity userId, LocalTime startTime,
+                                                   LocalDate date);
+
+    boolean existsByUserEntityAndEndTimeAndDate (UserEntity userId, LocalTime endTime,
+                                                 LocalDate date);
+
+    boolean existsByUserEntityAndDateAndStartTimeBeforeOrEndTimeAfter (UserEntity userId,
+                                                                        LocalDate date,
+                                                                        LocalTime startTime,
+                                                                        LocalTime endTime);
+
     WorkHourEntity findById(Long id);
     List<WorkHourDTO> findAllWorkHours();
     void saveWorkHour (WorkHourForm workHourForm);

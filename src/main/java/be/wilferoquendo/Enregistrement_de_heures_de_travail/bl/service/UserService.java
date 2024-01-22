@@ -14,6 +14,8 @@ public interface UserService {
     UserEntity findById(Long id);
 
     boolean existsByUserId(Long userId);
+
+    UserEntity getUserEntityById(Long userId);
     List<UserDTO> findAllUsers();
 
     void saveUser(UserForm userForm);

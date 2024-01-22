@@ -1,5 +1,6 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository;
 
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummary;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
@@ -19,6 +20,20 @@ import java.util.List;
 
 @Repository
 public interface WorkHourJpaRepository extends JpaRepository<WorkHourEntity, Long> {
+
+    boolean existsByUserEntityAndStartTimeAndDate (UserEntity userId, LocalTime startTime,
+                                                   LocalDate date);
+
+    boolean existsByUserEntityAndEndTimeAndDate (UserEntity userId, LocalTime endTime,
+                                                   LocalDate date);
+
+    boolean existsByUserEntityAndDateAndStartTimeBeforeOrEndTimeAfter(UserEntity userId,
+                                                                       LocalDate date,
+                                                                LocalTime startTime,
+                                                                LocalTime endTime);
+
+
+
     @Query(
             """
                     SELECT wh.userEntity.userId as userEntity, SUM(wh.calculationOfWorkingHours) as calculationOfWorkingHours, SUM(wh.totalSalaryCost) as totalSalaryCost 
