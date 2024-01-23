@@ -1,7 +1,6 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.impl;
 
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.RequestNotFoundException;
-import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.UserNotFoundException;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
@@ -24,7 +23,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WorkHourServiceImpl implements WorkHourService {
@@ -117,138 +115,6 @@ public class WorkHourServiceImpl implements WorkHourService {
             } catch (Exception e) {
                 throw new RequestNotFoundException("@Service " + e);
             }
-
-
-
-
-
-
-
-
-
-
-//        try {
-//            UserEntity userIdLikeEntity = userService.getUserEntityById(workHourForm.getUserId());
-//            List<WorkHourEntity> existingWorkHours = findByUserEntityAndDate(userIdLikeEntity
-//                    , workHourForm.getDate());
-//
-//            System.out.println("***************\nThere is existingWorkHours\n***************\n" + existingWorkHours);
-//
-//            if (!existingWorkHours.isEmpty()) {
-//                for (WorkHourEntity existingWorkHour : existingWorkHours) {
-//                    if (hasTimeOverlap(existingWorkHour, workHourForm)) {
-//                        System.out.println("***************\nThere is superposition\n***************");
-//                        throw new RequestNotFoundException("A record already exists for this user with the same time or within the same range.");
-//                    } else {
-//                        System.out.println("***************\nThere is NOT superposition\n***************");
-//
-//                        UserEntity userEntity = userService.findById(workHourForm.getUserId());
-//                        if (userEntity != null) {
-//                            WorkHourEntity workHourEntity = workHourForm.toEntity(userEntity);
-//
-//                            BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
-//                            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
-//
-//                            BigDecimal totalSalaryCost = calculateAndUpdateTotalSalaryCost(calculatedHours,
-//                                    userEntity.getHourlySalaryCost());
-//
-//                            workHourEntity.setHourlySalaryCost(userEntity.getHourlySalaryCost());
-//                            workHourEntity.setTotalSalaryCost(totalSalaryCost);
-//
-//                            this.workHourJpaRepository.save(workHourEntity);
-//                        } else {
-//                            throw new UserNotFoundException("User not found for ID: " + workHourForm.getUserId());
-//                        }
-//                    }
-//                }
-//            } else {
-//                System.out.println("/////////\nThis is vide\n////////////");
-//                UserEntity userEntity = userService.findById(workHourForm.getUserId());
-//                if (userEntity != null) {
-//                    WorkHourEntity workHourEntity = workHourForm.toEntity(userEntity);
-//
-//                    BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
-//                    workHourEntity.setCalculationOfWorkingHours(calculatedHours);
-//
-//                    BigDecimal totalSalaryCost = calculateAndUpdateTotalSalaryCost(calculatedHours,
-//                            userEntity.getHourlySalaryCost());
-//
-//                    workHourEntity.setHourlySalaryCost(userEntity.getHourlySalaryCost());
-//                    workHourEntity.setTotalSalaryCost(totalSalaryCost);
-//
-//                    this.workHourJpaRepository.save(workHourEntity);
-//                }
-//            }
-//        } catch (Exception e) {
-//            throw new RequestNotFoundException(" @Service " + e);
-//        }
-
-
-//
-//        if (existsByUserEntityAndDateAndStartTimeBeforeOrEndTimeAfter(userIdLikeEntity,
-//                workHourForm.getDate(), workHourForm.getStartTime(), workHourForm.getEndTime())) {
-//            System.out.println("*******\nThere is a work hour registered between: \n" + workHourForm.getStartTime() + "\n" + workHourForm.getEndTime() + "**************");
-//        } else {
-//            System.out.println("---------there is not any hour between");
-//        }
-
-
-//        System.out.println("************\nresult for " +
-//                "endtime and startTime\n " + existsByUserEntityAndDateAndStartTimeBefore
-//                (userIdLikeEntity,
-//                        workHourForm.getDate(), workHourForm.getStartTime()) + "\n" +
-//                "************");
-//
-//        System.out.println("/////////////////\nresult for " +
-//                "endtime and endTime\n " + existsByUserEntityAndDateAndEndTimeAfter
-//                (userIdLikeEntity,
-//                        workHourForm.getDate(), workHourForm.getEndTime()) + "\n" +
-//                "///////////////");
-//
-//        List<WorkHourEntity> workHourEntitiesSame = findByUserEntityAndDate
-//                (userIdLikeEntity, workHourForm.getDate());
-//
-//        System.out.println("???????????this is the list with the same user and date \n" +
-//
-//                "\n???????????");
-
-//code ok
-//        if (existsByUserEntityAndEndTimeAndDate(userIdLikeEntity, workHourForm.getEndTime(),
-//                workHourForm.getDate())
-//                ||
-//                existsByUserEntityAndStartTimeAndDate(userIdLikeEntity,
-//                        workHourForm.getStartTime(),
-//                        workHourForm.getDate())
-//                ||
-//                existsByUserEntityAndDateAndStartTimeBefore
-//                        (userIdLikeEntity,
-//                                workHourForm.getDate(), workHourForm.getStartTime())
-//                ||
-//                existsByUserEntityAndDateAndEndTimeAfter
-//                        (userIdLikeEntity,
-//                                workHourForm.getDate(), workHourForm.getEndTime())
-//        ) {
-//            throw new RequestNotFoundException("A record already exists for this user with the same time or within the same range.");
-//        } else {
-//            UserEntity userEntity = userService.findById(workHourForm.getUserId());
-//
-//            if (userEntity != null) {
-//                WorkHourEntity workHourEntity = workHourForm.toEntity(userEntity);
-//
-//                BigDecimal calculatedHours = calculateWorkingHours(workHourForm.getStartTime(), workHourForm.getEndTime(), workHourForm.getDate());
-//                workHourEntity.setCalculationOfWorkingHours(calculatedHours);
-//
-//                BigDecimal totalSalaryCost = calculateAndUpdateTotalSalaryCost(calculatedHours,
-//                        userEntity.getHourlySalaryCost());
-//
-//                workHourEntity.setHourlySalaryCost(userEntity.getHourlySalaryCost());
-//                workHourEntity.setTotalSalaryCost(totalSalaryCost);
-//
-//                this.workHourJpaRepository.save(workHourEntity);
-//            } else {
-//                throw new UserNotFoundException("User not found for ID: " + workHourForm.getUserId());
-//            }
-//        }
     }
 
     @Override
@@ -316,15 +182,15 @@ public class WorkHourServiceImpl implements WorkHourService {
         }
     }
 
-    private boolean hasTimeOverlap(WorkHourEntity workHour1, WorkHourForm workHour2) {
-        // Verificar si hay superposición de horas
-        LocalDateTime start1 = LocalDateTime.of(workHour1.getDate(), workHour1.getStartTime());
-        LocalDateTime end1 = LocalDateTime.of(workHour1.getDate(), workHour1.getEndTime());
+    private boolean hasTimeOverlap(WorkHourEntity workHourFound, WorkHourForm workHourToCreate) {
 
-        LocalDateTime start2 = LocalDateTime.of(workHour2.getDate(), workHour2.getStartTime());
-        LocalDateTime end2 = LocalDateTime.of(workHour2.getDate(), workHour2.getEndTime());
+        LocalDateTime startHourFound = LocalDateTime.of(workHourFound.getDate(), workHourFound.getStartTime());
+        LocalDateTime endHourFound = LocalDateTime.of(workHourFound.getDate(), workHourFound.getEndTime());
 
-        return start1.isBefore(end2) && start2.isBefore(end1);
+        LocalDateTime startHourToCreate = LocalDateTime.of(workHourToCreate.getDate(), workHourToCreate.getStartTime());
+        LocalDateTime endHourToCreate = LocalDateTime.of(workHourToCreate.getDate(), workHourToCreate.getEndTime());
+
+        return startHourFound.isBefore(endHourToCreate) && startHourToCreate.isBefore(endHourFound);
     }
 
     private BigDecimal calculateWorkingHours(LocalTime startTime, LocalTime endTime, LocalDate date) {
@@ -353,24 +219,5 @@ public class WorkHourServiceImpl implements WorkHourService {
             return BigDecimal.ZERO;
         }
     }
-
-
-//    private boolean existsByUserIdAndStartTimeAndDate(
-//            workHourForm.getUserId(),
-//                    workHourForm.getStartTime(),
-//                            workHourForm.getDate()) {
-//        if (workHourJpaRepository.existsByUserIdAndStartTimeAndDate) {
-//
-//        }
-//    }
-//
-//                    || workHourJpaRepository.existsByUserIdAndEndTimeAndDate(
-//                    workHourForm.getUserId(),
-//                    workHourForm.getEndTime(),
-//                    workHourForm.getDate())) {
-//        throw new DuplicateWorkHourException("Ya existe un registro con la misma hora para el usuario en la misma fecha.");
-//    }
-//
-//    private boolean existsByUserIdAndStartTimeAndDate
 }
 
