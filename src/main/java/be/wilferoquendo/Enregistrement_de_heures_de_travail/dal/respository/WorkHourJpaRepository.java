@@ -27,10 +27,15 @@ public interface WorkHourJpaRepository extends JpaRepository<WorkHourEntity, Lon
     boolean existsByUserEntityAndEndTimeAndDate (UserEntity userId, LocalTime endTime,
                                                    LocalDate date);
 
-    boolean existsByUserEntityAndDateAndStartTimeBeforeOrEndTimeAfter(UserEntity userId,
+    boolean existsByUserEntityAndDateAndStartTimeBefore(UserEntity userId,
                                                                        LocalDate date,
-                                                                LocalTime startTime,
-                                                                LocalTime endTime);
+                                                                      LocalTime startTime);
+
+    boolean existsByUserEntityAndDateAndEndTimeAfter (UserEntity userId,
+                                                                      LocalDate date,
+                                                                      LocalTime endTime);
+
+    List<WorkHourEntity> findByUserEntityAndDate(UserEntity userId, LocalDate date);
 
 
 
