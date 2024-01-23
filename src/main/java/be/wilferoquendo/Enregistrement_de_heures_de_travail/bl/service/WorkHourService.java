@@ -19,20 +19,6 @@ public interface WorkHourService {
 
     boolean existsByHourId(Long id);
 
-    boolean existsByUserEntityAndStartTimeAndDate (UserEntity userId, LocalTime startTime,
-                                                   LocalDate date);
-
-    boolean existsByUserEntityAndEndTimeAndDate (UserEntity userId, LocalTime endTime,
-                                                 LocalDate date);
-
-    boolean existsByUserEntityAndDateAndStartTimeBefore (UserEntity userId,
-                                                                        LocalDate date,
-                                                                       LocalTime startTime);
-
-    boolean existsByUserEntityAndDateAndEndTimeAfter (UserEntity userId,
-                                                      LocalDate date,
-                                                      LocalTime endTime);
-
     List<WorkHourEntity> findByUserEntityAndDate(UserEntity userId, LocalDate date);
 
     WorkHourEntity findById(Long id);

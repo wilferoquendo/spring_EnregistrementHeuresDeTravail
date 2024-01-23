@@ -41,31 +41,6 @@ public class WorkHourServiceImpl implements WorkHourService {
         return workHourJpaRepository.existsById(id);
     }
 
-    @Override
-    public boolean existsByUserEntityAndStartTimeAndDate(UserEntity userId, LocalTime startTime,
-                                                         LocalDate date) {
-        return workHourJpaRepository.existsByUserEntityAndStartTimeAndDate(userId, startTime, date);
-    }
-
-    @Override
-    public boolean existsByUserEntityAndEndTimeAndDate(UserEntity userId, LocalTime endTime, LocalDate date) {
-        return workHourJpaRepository.existsByUserEntityAndEndTimeAndDate(userId, endTime, date);
-    }
-
-    @Override
-    public boolean existsByUserEntityAndDateAndStartTimeBefore(UserEntity userId,
-                                                               LocalDate date,
-                                                               LocalTime startTime
-    ) {
-        return workHourJpaRepository.existsByUserEntityAndDateAndStartTimeBefore(userId, date,
-                startTime);
-    }
-
-    @Override
-    public boolean existsByUserEntityAndDateAndEndTimeAfter(UserEntity userId, LocalDate date, LocalTime endTime) {
-        return workHourJpaRepository.existsByUserEntityAndDateAndEndTimeAfter(userId, date, endTime);
-    }
-
     public List<WorkHourEntity> findByUserEntityAndDate(UserEntity userId, LocalDate date) {
         return workHourJpaRepository.findByUserEntityAndDate(userId, date);
     }
