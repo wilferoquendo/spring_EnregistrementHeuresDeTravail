@@ -31,5 +31,5 @@ public class DeliveryNoteEntity {
     private CustomerEntity customerEntity;
 
     @OneToMany(targetEntity = WorkHourEntity.class, mappedBy = "deliveryNoteEntity")
-    private List<WorkHourEntity> workHourEntityList;
+    private List<WorkHourEntity> workHourEntity;
 }
