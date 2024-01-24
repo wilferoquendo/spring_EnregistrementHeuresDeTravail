@@ -11,14 +11,14 @@ import java.math.BigDecimal;
 @Setter
 public class UserDTO {
 
-    private Long id;
-    private String name;
+    private Long userId;
+    private String userName;
     private BigDecimal hourlySalaryCost;
 
     public static UserDTO fromEntity(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(userEntity.getUserId());
-        userDTO.setName(userEntity.getUserName());
+        userDTO.setUserId(userEntity.getUserId());
+        userDTO.setUserName(userEntity.getUserName());
         userDTO.setHourlySalaryCost(userEntity.getHourlySalaryCost());
         return userDTO;
     }
