@@ -8,7 +8,6 @@ import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.respository.User
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.UpdateUserDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.dto.UserDTO;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.pl.form.UserForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

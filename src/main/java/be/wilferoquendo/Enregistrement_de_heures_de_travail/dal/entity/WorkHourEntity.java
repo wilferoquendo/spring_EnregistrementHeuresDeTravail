@@ -48,12 +48,10 @@ public class WorkHourEntity {
     private UserEntity userEntity;
 
     @ManyToOne
-    @JoinColumn(name = "bon_de_livraison_id", insertable = false, updatable = false)
+    @JoinColumn(name = "bon_de_livraison_id", updatable = false)
     private DeliveryNoteEntity deliveryNoteEntity;
     @PrePersist
     public void prePersist() {
         creationDate = LocalDateTime.now();
     }
-
-
 }

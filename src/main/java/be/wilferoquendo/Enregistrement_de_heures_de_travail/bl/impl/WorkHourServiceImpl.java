@@ -1,8 +1,10 @@
 package be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.impl;
 
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.exception.RequestNotFoundException;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.DeliveryNoteService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.UserService;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.bl.service.WorkHourService;
+import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.DeliveryNoteEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.UserEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.entity.WorkHourEntity;
 import be.wilferoquendo.Enregistrement_de_heures_de_travail.dal.projection.WorkHourSummaryWithUserName;
@@ -30,9 +32,12 @@ public class WorkHourServiceImpl implements WorkHourService {
     private final WorkHourJpaRepository workHourJpaRepository;
     private final UserService userService;
 
-    public WorkHourServiceImpl(WorkHourJpaRepository workHourJpaRepository, UserService userService) {
+    private final DeliveryNoteService deliveryNoteService;
+
+    public WorkHourServiceImpl(WorkHourJpaRepository workHourJpaRepository, UserService userService, DeliveryNoteService deliveryNoteService) {
         this.workHourJpaRepository = workHourJpaRepository;
         this.userService = userService;
+        this.deliveryNoteService = deliveryNoteService;
     }
 
 
@@ -63,33 +68,36 @@ public class WorkHourServiceImpl implements WorkHourService {
     @Transactional
     public void saveWorkHour(WorkHourForm workHourForm) {
 
-            try {
-                UserEntity userEntity = userService.getUserEntityById(workHourForm.getUserId());
-                LocalDate date = workHourForm.getDate();
-                LocalTime startTime = workHourForm.getStartTime();
-                LocalTime endTime = workHourForm.getEndTime();
+        try {
+            UserEntity userEntity = userService.getUserEntityById(workHourForm.getUserId());
+            DeliveryNoteEntity deliveryNoteEntity =
+                    deliveryNoteService.getDeliveryNoteEntityById(workHourForm.getDeliveryNoteId());
+            LocalDate date = workHourForm.getDate();
+            LocalTime startTime = workHourForm.getStartTime();
+            LocalTime endTime = workHourForm.getEndTime();
 
-                List<WorkHourEntity> existingWorkHours = findByUserEntityAndDate(userEntity, date);
+            List<WorkHourEntity> existingWorkHours = findByUserEntityAndDate(userEntity, date);
 
-                for (WorkHourEntity existingWorkHour : existingWorkHours) {
-                    if (hasTimeOverlap(existingWorkHour, workHourForm)) {
-                        throw new RequestNotFoundException("A record already exists for this user with the same time or within the same range.");
-                    }
+            for (WorkHourEntity existingWorkHour : existingWorkHours) {
+                if (hasTimeOverlap(existingWorkHour, workHourForm)) {
+                    throw new RequestNotFoundException("A record already exists for this user with the same time or within the same range.");
                 }
-
-                WorkHourEntity workHourEntity = workHourForm.toEntity(userEntity);
-                BigDecimal calculatedHours = calculateWorkingHours(startTime, endTime, date);
-                BigDecimal totalSalaryCost = calculateAndUpdateTotalSalaryCost(calculatedHours, userEntity.getHourlySalaryCost());
-
-                workHourEntity.setCalculationOfWorkingHours(calculatedHours);
-                workHourEntity.setHourlySalaryCost(userEntity.getHourlySalaryCost());
-                workHourEntity.setTotalSalaryCost(totalSalaryCost);
-
-                this.workHourJpaRepository.save(workHourEntity);
-
-            } catch (Exception e) {
-                throw new RequestNotFoundException("@Service " + e);
             }
+
+            WorkHourEntity workHourEntity = workHourForm.toEntity(userEntity,
+                    deliveryNoteEntity);
+            BigDecimal calculatedHours = calculateWorkingHours(startTime, endTime, date);
+            BigDecimal totalSalaryCost = calculateAndUpdateTotalSalaryCost(calculatedHours, userEntity.getHourlySalaryCost());
+
+            workHourEntity.setCalculationOfWorkingHours(calculatedHours);
+            workHourEntity.setHourlySalaryCost(userEntity.getHourlySalaryCost());
+            workHourEntity.setTotalSalaryCost(totalSalaryCost);
+
+            this.workHourJpaRepository.save(workHourEntity);
+
+        } catch (Exception e) {
+            throw new RequestNotFoundException("@Service " + e);
+        }
     }
 
     @Override
