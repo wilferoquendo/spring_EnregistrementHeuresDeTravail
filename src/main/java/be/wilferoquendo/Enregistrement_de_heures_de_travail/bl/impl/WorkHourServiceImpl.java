@@ -96,7 +96,7 @@ public class WorkHourServiceImpl implements WorkHourService {
             this.workHourJpaRepository.save(workHourEntity);
 
         } catch (Exception e) {
-            throw new RequestNotFoundException("@Service " + e);
+            throw new RequestNotFoundException("@Service: " + e.getMessage());
         }
     }
 
