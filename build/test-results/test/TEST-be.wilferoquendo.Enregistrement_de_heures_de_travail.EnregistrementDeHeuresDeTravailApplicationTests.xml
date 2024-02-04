@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="be.wilferoquendo.Enregistrement_de_heures_de_travail.EnregistrementDeHeuresDeTravailApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-02-04T20:46:03" hostname="DESKTOP-5151CMD" time="0.912">
+  <properties/>
+  <testcase name="contextLoads()" classname="be.wilferoquendo.Enregistrement_de_heures_de_travail.EnregistrementDeHeuresDeTravailApplicationTests" time="0.912"/>
+  <system-out><![CDATA[21:45:55.997 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [be.wilferoquendo.Enregistrement_de_heures_de_travail.EnregistrementDeHeuresDeTravailApplicationTests]: EnregistrementDeHeuresDeTravailApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:45:56.126 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration be.wilferoquendo.Enregistrement_de_heures_de_travail.EnregistrementDeHeuresDeTravailApplication for test class be.wilferoquendo.Enregistrement_de_heures_de_travail.EnregistrementDeHeuresDeTravailApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2024-02-04T21:45:56.781+01:00  INFO 6784 --- [    Test worker] trementDeHeuresDeTravailApplicationTests : Starting EnregistrementDeHeuresDeTravailApplicationTests using Java 21.0.2 with PID 6784 (started by user in C:\Users\user\IdeaProjects\Spring\Enregistrement_de_heures_de_travail)
+2024-02-04T21:45:56.782+01:00  INFO 6784 --- [    Test worker] trementDeHeuresDeTravailApplicationTests : The following 1 profile is active: "bdlocalhost"
+2024-02-04T21:45:57.956+01:00  INFO 6784 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-02-04T21:45:58.101+01:00  INFO 6784 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 123 ms. Found 4 JPA repository interfaces.
+2024-02-04T21:45:58.903+01:00  INFO 6784 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-02-04T21:45:59.092+01:00  INFO 6784 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2024-02-04T21:45:59.154+01:00  INFO 6784 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-02-04T21:45:59.541+01:00  INFO 6784 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-02-04T21:45:59.580+01:00  INFO 6784 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-02-04T21:45:59.903+01:00  INFO 6784 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@d3cce46
+2024-02-04T21:45:59.906+01:00  INFO 6784 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-02-04T21:46:01.264+01:00  INFO 6784 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-02-04T21:46:01.379+01:00  INFO 6784 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-02-04T21:46:01.970+01:00  INFO 6784 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-02-04T21:46:03.302+01:00  WARN 6784 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-02-04T21:46:03.858+01:00  INFO 6784 --- [    Test worker] trementDeHeuresDeTravailApplicationTests : Started EnregistrementDeHeuresDeTravailApplicationTests in 7.476 seconds (process running for 9.296)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\user\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.10\90ed94ac044ea8953b224304c762316e91fd6b31\byte-buddy-agent-1.14.10.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
